@@ -11,39 +11,44 @@ LDFLAGS=
 GREP_SOURCES=$(wildcard ./grep/s21_*.c)
 GREP_OBJECTS=$(GREP_SOURCES:.c=.o)
 GREP_EXE=./grep/grep
+
 ##TEST_SOURCES=./test.c
-EXECUTABLE=
 ##CLIBS=-lm $(shell pkg-config --cflags --libs check)
 
 
 all: clean grep cpplint
 
 
-%.o: %.c
-	$(CC) -c $(CFLAGS) $^ -o $@
+%.o: %.c ./grep/s21_grep.h
+	$(CC) -c $(CFLAGS) $< -o $@
 
 
-s21_grep: $(GREP_OBJECTS) ./grep/s21_grep.h
-	$(CC) $^ -o $GREP_EXE
+$(GREP_EXE): $(GREP_OBJECTS)
+	clear
+	$(CC) $^ -o $(GREP_EXE)
+
+
+s21_grep: $(GREP_EXE)
 
 
 test: s21_grep
-	$(GREP_EXE)
+	clear
+	echo "hello\nYES" | $(GREP_EXE) -i -e he.lo -s
 
 
 clean:
-	find ./ \( -iname "*.gcda" \
-		-or -iname "*.gcov" \
-		-or -iname "*.gcno" \
-		-or -iname "*.out" \
-		-or -iname "*.o" \
-		-or -iname "*.a" \
-		-or -iname "*.html" \
-		-or -iname "*.info" \
-		-or -iname "*.css" \
-		-or -iname "*.png" \
-	\) -delete
-
+#	find ./ \( -iname "*.gcda" \
+#		-or -iname "*.gcov" \
+#		-or -iname "*.gcno" \
+#		-or -iname "*.out" \
+#		-or -iname "*.o" \
+#		-or -iname "*.a" \
+#		-or -iname "*.html" \
+#		-or -iname "*.info" \
+#		-or -iname "*.css" \
+#		-or -iname "*.png" \
+#	\) -delete
+#
 	####	Directories
 	mv -t /tmp/ ./tests/src/ \
 		./.DS_Store/ \
@@ -51,6 +56,7 @@ clean:
 		./usr/ \
 		./unit_tests.out.dSYM/ \
         ./gcc_extra_test_logs.txt \
+		$(GREP_EXE) \
 
 
 cpplint:

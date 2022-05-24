@@ -1,13 +1,13 @@
 #include "s21_grep.h"
-
 #include <unistd.h>
+#include <stdio.h>
 
 int s21_data_set_opts(s21_data *setts) {
     const int argc = setts->argc;
     char *const *argv = setts->argv;
     const char *options = setts->options;
-    char **files = (char **)setts->files;
-    int *files_count = &setts->files_count;
+    char **pattern_p = &setts->pattern;
+    char **file_p = &setts->file;
 
     int result = 0;
 
@@ -52,9 +52,13 @@ int s21_data_set_opts(s21_data *setts) {
     }
 
     if (result == 0) {
-        *files_count = argc - optind;
-        for (int i = 0; i <= *files_count; i++) {
-            files[i] = argv[optind + i];
+        if (optind < argc) {
+            *pattern_p = argv[optind];
+            optind++;
+        }
+        if (optind < argc) {
+            *file_p = argv[optind];
+            optind++;
         }
     }
 

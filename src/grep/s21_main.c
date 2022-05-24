@@ -1,5 +1,4 @@
 #include "s21_grep.h"
-
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
@@ -12,15 +11,32 @@ int main(int argc, char *argv[]) {
     setts.options = OPTIONS;
     result = s21_data_set_opts(&setts);
     
-    while (result == 0 && scanf("%499s", setts.line) != EOF) {
-        result = s21_data_line_is_match(&setts);
-
-        if (setts.line_is_match) {
-            printf("line:%s\n", setts.line);
+    setts.src = stdin;
+    if (setts.file) {
+        setts.file_F = fopen(setts.file, "r");
+        if (setts.file_F) {
+            setts.src = setts.file_F;
         }
     }
+    while (result == 0 && fgets(setts.line, 500, setts.src)) {
+        str_del_newline(setts.line);
+        LOG("main():while:current line:\t\t\t%s", setts.line);
+        result = s21_data_line_is_match(&setts);
 
+        if (result == 0)
+            s21_data_print_output(&setts);
+
+        memset(setts.line, 0, 500);
+    }
+
+    s21_data_print_output(&setts);
+
+    LOG("main():end");
     LOG1("THE_END", &setts);
+
+    if (setts.file_F) {
+        fclose(setts.file_F);
+    }
     return 0;
 }
 
@@ -59,13 +75,8 @@ void s21_data_print_data(const s21_data *setts) {
     printf("setts->opt_file_FILE:\t\t%p\n", setts->opt_file_FILE);
     printf("setts->opt_only_matching:\t\t%i\n", setts->opt_only_matching);
     puts("");
-    printf("setts->patterns:\t\t%p\n", setts->patterns);
-    puts("");
-    printf("setts->files_count:\t\t%i\n", setts->files_count);
-    printf("setts->files:\t\t%p\n", setts->files);
-    for (int i = 0; i < setts->files_count; i++) {
-        printf("\tsetts->files[%i]:\t\t<%s>\n", i, setts->files[i]);
-    }
+    printf("setts->pattern:\t\t%s\n", setts->pattern);
+    printf("setts->file:\t\t%s\n", setts->file);
     puts("");
     printf("setts->line:\t\t%s\n", setts->line);
     printf("setts->line_is_match:\t\t%i\n", setts->line_is_match);

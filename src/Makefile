@@ -50,25 +50,21 @@ test: s21_grep
 
 
 clean:
-#	find ./ \( -iname "*.gcda" \
-#		-or -iname "*.gcov" \
-#		-or -iname "*.gcno" \
-#		-or -iname "*.out" \
-#		-or -iname "*.o" \
-#		-or -iname "*.a" \
-#		-or -iname "*.html" \
-#		-or -iname "*.info" \
-#		-or -iname "*.css" \
-#		-or -iname "*.png" \
-#	\) -delete
-#
+	find ./ \( -iname "*.gcda" \
+		-or -iname "*.gcov" \
+		-or -iname "*.gcno" \
+		-or -iname "*.out" \
+		-or -iname "*.o" \
+		-or -iname "*.a" \
+		-or -iname "*.html" \
+		-or -iname "*.info" \
+		-or -iname "*.css" \
+		-or -iname "*.png" \
+	\) -exec mv -t /tmp/ {} \;
+
 	####	Directories
-	mv -t /tmp/ ./tests/src/ \
+	mv -t /tmp/ \
 		./.DS_Store/ \
-		./src/ \
-		./usr/ \
-		./unit_tests.out.dSYM/ \
-        ./gcc_extra_test_logs.txt \
 		$(GREP_EXE) \
 
 

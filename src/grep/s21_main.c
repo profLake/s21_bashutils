@@ -15,8 +15,6 @@ int main(int argc, char *argv[]) {
     result = s21_data_set_opts(&setts);
     
     for (int i = 0; i < setts.files_count; i++) {
-        setts.files_i = i;
-
         FILE *curr_F;
         if (*setts.files[0] == '>') {
             curr_F = stdin;
@@ -26,8 +24,14 @@ int main(int argc, char *argv[]) {
                 result = 2;
             }
         }
+        
+        setts.files_i = i;
+        setts.files_i_is_printed = 0;
+        setts.line_number = 0;
 
         while (result == 0 && fgets(setts.line, 500, curr_F)) {
+            setts.line_number++;
+
             s21_str_del_newline(setts.line);
             LOG("main():while:current line:\t\t\t%s", setts.line);
             result = s21_data_line_is_match(&setts);
@@ -49,7 +53,9 @@ int main(int argc, char *argv[]) {
     LOG("main():end");
     LOG1("THE_END", &setts);
 
-    return 0;
+    s21_data_print_error(&setts, result);
+
+    return result;
 }
 
 

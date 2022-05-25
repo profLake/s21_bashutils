@@ -25,7 +25,7 @@ typedef struct {
     int opt_file;                   /* -f FILE */
     int opt_only_matching;          /* -o. May be exluded by -v */
 
-    int opt_with_filename;          /* -H (optional) */
+    int opt_with_filename;          /* -H (optional). May be exluded by -l */
 
     char *patterns[500];
     int patterns_count;
@@ -35,6 +35,7 @@ typedef struct {
     char *files[500];
     int files_count;
     int files_i;
+    int files_i_is_printed;
 
     //int last_result;
 
@@ -43,12 +44,14 @@ typedef struct {
     int line_is_match_count;
     int line_inner_matches[500][2];
     int line_inner_matches_count;
+    int line_number;
 } s21_data;
 
 void s21_data_set_defaults(s21_data *setts);
 int s21_data_set_opts(s21_data *setts);
 int s21_data_line_is_match(s21_data *setts);
 int s21_data_print_output(s21_data *setts);
+int s21_data_print_error(s21_data *setts, int error);
 #define s21_str_del_newline(str) \
     str[strlen(str) - 1] = strchr(str, '\n') ? '\0' : str[strlen(str) - 1];
 

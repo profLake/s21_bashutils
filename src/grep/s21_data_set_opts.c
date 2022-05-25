@@ -6,8 +6,6 @@ int s21_data_set_opts(s21_data *setts) {
     const int argc = setts->argc;
     char *const *argv = setts->argv;
     const char *options = setts->options;
-    char **pattern_p = &setts->pattern;
-    char **file_p = &setts->file;
 
     int result = 0;
 
@@ -16,7 +14,9 @@ int s21_data_set_opts(s21_data *setts) {
         switch (opt) {
             case 'e':
                 setts->opt_e = 1;
-                setts->opt_e_PATTERN = optarg;
+                setts->patterns[setts->patterns_i] = optarg;
+                setts->patterns_i++;
+                setts->patterns_count++;
                 break;
             case 'i':
                 setts->opt_ignore_case = 1;
@@ -41,7 +41,7 @@ int s21_data_set_opts(s21_data *setts) {
                 break;
             case 'f':
                 setts->opt_file = 1;
-                setts->opt_file_FILE = optarg;
+                setts->patterns_file = optarg;
                 break;
             case 'o':
                 setts->opt_only_matching = 1;
@@ -53,12 +53,22 @@ int s21_data_set_opts(s21_data *setts) {
 
     if (result == 0) {
         if (optind < argc) {
-            *pattern_p = argv[optind];
-            optind++;
+            if (setts->opt_e == 0) {
+                setts->patterns[setts->patterns_i] = argv[optind];
+                setts->patterns_i++;
+                setts->patterns_count++;
+                optind++;
+            }
         }
-        if (optind < argc) {
-            *file_p = argv[optind];
+        int i = 0;
+        while (optind < argc) {
+            setts->files[i] = (char *)argv[optind];
+            setts->files_count = i + 1;
             optind++;
+            i++;
+        }
+        if (setts->files_count > 1) {
+            setts->opt_with_filename = 1;
         }
     }
 

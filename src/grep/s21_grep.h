@@ -14,59 +14,63 @@ typedef struct {
     char *const *argv;
 
     int opt_e;                      /* -e PATTERN */
-    char *opt_e_PATTERN;
     int opt_ignore_case;            /* -i */
     int opt_invert_match;           /* -v */
     int opt_count;                  /* -c */
-    int opt_count_n;
     int opt_files_with_matches;     /* -l */
     int opt_line_number;            /* -n */
 
     int opt_no_filename;            /* -h */
     int opt_no_messages;            /* -s */
     int opt_file;                   /* -f FILE */
-    char *opt_file_FILE;
-    int opt_only_matching;          /* -o */
+    int opt_only_matching;          /* -o. May be exluded by -v */
 
-    char *pattern;
-    char *file;
-    FILE *file_F;
+    int opt_with_filename;          /* -H (optional) */
 
-    FILE *src;
+    char *patterns[500];
+    int patterns_count;
+    int patterns_i;
+    char *patterns_file;
+
+    char *files[500];
+    int files_count;
+    int files_i;
 
     //int last_result;
 
     char line[500];
     int line_is_match;
-
-    //int regex_flags;
-    regmatch_t regex_matches[500];
+    int line_is_match_count;
+    int line_inner_matches[500][2];
+    int line_inner_matches_count;
 } s21_data;
 
 void s21_data_set_defaults(s21_data *setts);
 int s21_data_set_opts(s21_data *setts);
 int s21_data_line_is_match(s21_data *setts);
 int s21_data_print_output(s21_data *setts);
+#define s21_str_del_newline(str) \
+    str[strlen(str) - 1] = strchr(str, '\n') ? '\0' : str[strlen(str) - 1];
 
 
 /* Debug */
-#include <string.h>
-#define str_del_newline(str) \
-    str[strlen(str) - 1] = strchr(str, '\n') ? '\0' : str[strlen(str) - 1];
-#define DEBUG
+//#define DEBUG
+#define STDERR stderr
+
+#ifdef DEBUG
 #include <stdio.h>
 #define LOG(...) { \
-    fprintf(stdout, "========================================LOG:");\
-    fprintf(stdout, __VA_ARGS__); puts(""); \
-    fflush(stdout); \
+    fprintf(STDERR, "========================================LOG:");\
+    fprintf(STDERR, __VA_ARGS__); puts(""); \
+    fflush(STDERR); \
 }
 void s21_data_print_data(const s21_data *setts);
 #define LOG1(M, X) { \
-    fprintf(stdout, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOG1\n"); \
-    fprintf(stdout, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>\"%s\"\n", M); \
+    fprintf(STDERR, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOG1\n"); \
+    fprintf(STDERR, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>\"%s\"\n", M); \
     s21_data_print_data(X); \
-    fprintf(stdout, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LOG1\n"); \
-    fflush(stdout); \
+    fprintf(STDERR, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LOG1\n"); \
+    fflush(STDERR); \
 }
 /*
 #define LOG2(M, FS) { \
@@ -77,6 +81,13 @@ void s21_data_print_data(const s21_data *setts);
     fflush(stderr); \
 } */
 
+#else
+
+#define LOG(...) {}
+#define LOG1(M, X) {}
+#define LOG2(M, FS) {}
+
+#endif  // Debug
 
 
 #endif  // SRC_GREP_S21_GREP_H_

@@ -6,47 +6,59 @@
 int s21_data_line_is_match(s21_data *setts) {
     const char *line = setts->line;
     const int opt_ignore_case = setts->opt_ignore_case;
-    const char *e_PATTERN = setts->opt_e_PATTERN;
-    const char *pattern = setts->pattern;
+    const char **patterns = (const char **)setts->patterns;
+    const int patterns_count = setts->patterns_count;
+    const int opt_invert_match = setts->opt_invert_match;
     int* line_is_match_p = &setts->line_is_match;
-    regmatch_t *regex_matches = setts->regex_matches;
-    int *opt_count_n_p = &setts->opt_count_n;
+    int *line_is_match_count_p = &setts->line_is_match_count;
+    int *line_inner_matches_pp = (int *)setts->line_inner_matches;
+    int *line_inner_matches_count_p = &setts->line_inner_matches_count;
 
 
-    int result = 0;
-    *line_is_match_p = 0;
-
-
-    regex_t regex;
+    int result;
     int eflags;
+    regex_t regex;
+    int offset;
+    int i;
+    regmatch_t regex_matches[1];
+
+    *line_is_match_p = 0;
+    memset(line_inner_matches_pp, 0, 500*2);
+    *line_inner_matches_count_p = 0;
+    result = 0;
+    i = 0;
+
     eflags = REG_NEWLINE;
-    if (opt_ignore_case) {
+    if (opt_ignore_case)
         eflags |= REG_ICASE;
-    }
-    if (e_PATTERN) {
-        if (regcomp(&regex, e_PATTERN, eflags)) {
+
+    LOG("s21_data_line_is_match():patterns_count:\t\t%d", patterns_count)
+    for (int p = 0; p < patterns_count; p++) {
+        if (regcomp(&regex, patterns[p], eflags)) {
             result = -1;
         }
         if (result == 0) {
-            if (regexec(&regex, line, 1, regex_matches, 0)) {
-            } else {
-                *line_is_match_p = 1;
-                *opt_count_n_p += 1;
+            offset = 0;
+            while (regexec(&regex, line + offset, 1, regex_matches, 0) == 0) {
+                line_inner_matches_pp[i*2 + 0] = offset
+                        + regex_matches[0].rm_so;
+                line_inner_matches_pp[i*2 + 1] = offset
+                        + regex_matches[0].rm_eo;
+                *line_inner_matches_count_p += 1;
+                offset += regex_matches[0].rm_eo;
+                i++;
+                LOG("s21_data_line_is_match():found")
             }
         }
+        LOG("s21_data_line_is_match():endcycle")
     }
-    if (pattern) {
-        LOG("s21_data_line_is_match():pattern:\t\t\t%s", pattern);
-        if (regcomp(&regex, pattern, eflags)) {
-            result = -1;
-        }
-        if (result == 0) {
-            if (regexec(&regex, line, 1, regex_matches, 0)) {
-            } else {
-                *line_is_match_p = 1;
-                *opt_count_n_p += 1;
-            }
-        }
+    if ((i > 0 && opt_invert_match == 0)
+        || (i == 0 && opt_invert_match)) {
+        *line_is_match_p = 1;
+        *line_is_match_count_p += 1;
+        LOG("s21_data_line_is_match():issuit:i:\t\t%d", i)
+        LOG("s21_data_line_is_match():issuit:opt_invert_match:\t\t%d",
+            opt_invert_match)
     }
 
     return result;

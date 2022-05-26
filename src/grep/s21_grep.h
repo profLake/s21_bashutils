@@ -5,7 +5,6 @@
 #include <regex.h>
 
 #define OPTIONS "e:ivclnhsf:o"
-//#define OPTIONS "e:ivcln"
 
 typedef struct {
     char *options;

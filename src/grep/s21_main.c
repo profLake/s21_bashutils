@@ -14,41 +14,45 @@ int main(int argc, char *argv[]) {
     setts.files_count = 1;
     result = s21_data_set_opts(&setts);
     
-    for (int i = 0; i < setts.files_count; i++) {
-        FILE *curr_F;
-        if (*setts.files[i] == '>') {
-            curr_F = stdin;
-        } else {
-            curr_F = fopen(setts.files[i], "r");
-            if (curr_F == NULL) {
-                result = 2;
+    if (result == 0) {
+        for (int i = 0; i < setts.files_count; i++) {
+            FILE *curr_F;
+            if (*setts.files[i] == '>') {
+                curr_F = stdin;
+            } else {
+                curr_F = fopen(setts.files[i], "r");
+                if (curr_F == NULL) {
+                    result = 2;
+                }
             }
-        }
+            
+            setts.files_i = i;
+            setts.files_i_is_printed = 0;
+            setts.line_number = 0;
+    
+            while (result == 0 && fgets(setts.line, 500, curr_F)) {
+                setts.line_number++;
+    
+                s21_str_del_newline(setts.line);
+                LOG("main():while:current line:\t\t\t%s", setts.line);
+                result = s21_data_line_is_match(&setts);
         
-        setts.files_i = i;
-        setts.files_i_is_printed = 0;
-        setts.line_number = 0;
-
-        while (result == 0 && fgets(setts.line, 500, curr_F)) {
-            setts.line_number++;
-
-            s21_str_del_newline(setts.line);
-            LOG("main():while:current line:\t\t\t%s", setts.line);
-            result = s21_data_line_is_match(&setts);
+                if (result == 0)
+                    s21_data_print_output(&setts);
+        
+                memset(setts.line, 0, 500);
+            }
     
-            if (result == 0)
-                s21_data_print_output(&setts);
-    
-            memset(setts.line, 0, 500);
-        }
-
-        if (curr_F && curr_F != stdin) {
-            LOG("main():fclose():\t\t%s", setts.files[i]);
-            fclose(curr_F);
+            if (curr_F && curr_F != stdin) {
+                LOG("main():fclose():\t\t%s", setts.files[i]);
+                fclose(curr_F);
+            }
         }
     }
 
-    s21_data_print_output(&setts);
+    if (result == 0) {
+        s21_data_print_output(&setts);
+    }
 
     LOG("main():setts.files_count:\t\t%d", setts.files_count);
     LOG("main():end");

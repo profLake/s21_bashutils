@@ -57,7 +57,6 @@ int s21_data_print_error(s21_data *setts, int error);
 
 
 /* Debug */
-//#define DEBUG
 #define STDERR stderr
 
 #ifdef DEBUG

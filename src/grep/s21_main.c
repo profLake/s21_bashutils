@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     
     for (int i = 0; i < setts.files_count; i++) {
         FILE *curr_F;
-        if (*setts.files[0] == '>') {
+        if (*setts.files[i] == '>') {
             curr_F = stdin;
         } else {
             curr_F = fopen(setts.files[i], "r");
@@ -42,7 +42,8 @@ int main(int argc, char *argv[]) {
             memset(setts.line, 0, 500);
         }
 
-        if (curr_F != stdin) {
+        if (curr_F && curr_F != stdin) {
+            LOG("main():fclose():\t\t%s", setts.files[i]);
             fclose(curr_F);
         }
     }

@@ -1,37 +1,42 @@
 #include "s21_cat.h"
 #include <ctype.h>
-#include <string.h>
 
 int s21_data_files_i_print_line(s21_data *setts) {
     int result;
+    int istoprint;
+    int c_istoprint;
     const char *p;
-    size_t len_nl;
-    int is_to_print;
 
-    result = 0;
-
+    result = s21_data_set_files_i_line(setts);
+    istoprint = setts->files_i_line_i_istoprint;
     p = setts->files_i_line;
-    len_nl = strchr(p, '\n') - p;
-    LOG("s21_data_files_i_print_line():line:\t\t<%.*s>", (int)len_nl, p);
 
-    if (setts->opt_squeeze_blank
-        && setts->files_i_line_wasblank
-        && len_nl == 0) {
-    } else {
+
+    if (result == 0 && istoprint) {
+        if (setts->opt_number_nonblank) {
+            if (setts->files_i_line_i_nonblank) {
+                printf("%*d  ", N_WIDTH, setts->files_i_line_output_i);
+            }
+        }
+        if (setts->opt_number) {
+            printf("%*d  ", N_WIDTH, setts->files_i_line_output_i);
+        }
+    
         while (*p) {
-            is_to_print = 1;
+            c_istoprint = 1;
     
             if (setts->opt_show_nonprinting == 0) {
                 if (isprint(*p) == 0) {
-                    is_to_print = 1;
+                    c_istoprint = 1;
+                    /*  **** You should to set 0 here */
                 }
             }
     
-            if (is_to_print) {
+            if (c_istoprint) {
                 if (setts->opt_show_tabs) {
                     if (*p == '\t') {
                         printf(TAB_STR);
-                        is_to_print = 0;
+                        c_istoprint = 0;
                     }
                 }
                 if (setts->opt_show_ends) {
@@ -43,13 +48,6 @@ int s21_data_files_i_print_line(s21_data *setts) {
             }
             p++;
         }
-    }
-
-    if (len_nl == 0) {
-        LOG("s21_data_files_i_print_line():line_was_blank");
-        setts->files_i_line_wasblank = 1;
-    } else {
-        setts->files_i_line_wasblank = 0;
     }
 
     return result;

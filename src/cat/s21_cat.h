@@ -7,6 +7,7 @@
 #define STDIN_STR ">"
 #define TAB_STR "^I"
 #define END_SIGN_STR "$"
+#define N_WIDTH 6
 
 typedef struct {
     char *options;
@@ -30,12 +31,17 @@ typedef struct {
     int files_i_line_count;
     int files_i_linenonemp_count;
     int files_i_line_wasblank;
+    int files_i_line_output_i;
+    int files_i_line_i;
+    int files_i_line_i_nonblank;
+    int files_i_line_i_istoprint;
 } s21_data;
 
 void s21_data_set_defaults(s21_data *setts);
 int s21_data_set_opts(s21_data *setts);
 int s21_data_print_file(s21_data *setts);
 int s21_data_files_i_print_line(s21_data *setts);
+int s21_data_set_files_i_line(s21_data *setts);
 
 
 /* Debug */

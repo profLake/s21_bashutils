@@ -27,7 +27,9 @@ int s21_data_set_opts(s21_data *setts) {
                 setts->opt_show_nonprinting = 1;
                 break;
             case 'n':
-                setts->opt_number = 1;
+                if (setts->opt_number_nonblank == 0) {
+                    setts->opt_number = 1;
+                }
                 break;
             case 's':
                 setts->opt_squeeze_blank = 1;

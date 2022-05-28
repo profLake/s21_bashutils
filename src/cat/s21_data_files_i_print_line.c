@@ -15,11 +15,11 @@ int s21_data_files_i_print_line(s21_data *setts) {
     if (result == 0 && istoprint) {
         if (setts->opt_number_nonblank) {
             if (setts->files_i_line_i_nonblank) {
-                printf("%*d  ", N_WIDTH, setts->files_i_line_output_i);
+                printf("%*d\t", N_WIDTH, setts->files_i_line_output_i);
             }
         }
         if (setts->opt_number) {
-            printf("%*d  ", N_WIDTH, setts->files_i_line_output_i);
+            printf("%*d\t", N_WIDTH, setts->files_i_line_output_i);
         }
     
         while (*p) {

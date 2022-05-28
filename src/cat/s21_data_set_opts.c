@@ -14,6 +14,7 @@ int s21_data_set_opts(s21_data *setts) {
     while ((opt = getopt(argc, argv, options)) != -1) {
         switch (opt) {
             case 'b':
+                setts->opt_number = 0;
                 setts->opt_number_nonblank = 1;
                 break;
             case 'v':

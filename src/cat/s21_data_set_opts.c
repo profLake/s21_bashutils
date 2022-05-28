@@ -1,5 +1,6 @@
 #include "s21_cat.h"
 #include <unistd.h>
+#include <getopt.h>
 #include <stdio.h>
 
 int s21_data_set_opts(s21_data *setts) {
@@ -8,10 +9,20 @@ int s21_data_set_opts(s21_data *setts) {
     const char *options = setts->options;
     int result;
     int opt;
+    static struct option long_options[] = {
+        {"number-nonblank", no_argument,   0,  'b' },
+        {"number",          no_argument,   0,  'n' },
+        {"squeeze-blank",   no_argument,   0,  's' },
+        {0,                 no_argument,   0,  0 }
+    };
 
     result = 0;
 
-    while ((opt = getopt(argc, argv, options)) != -1) {
+    while (1) {
+        opt = getopt_long(argc, argv, options, long_options, NULL);
+        if (opt == -1) {
+            break;
+        }
         switch (opt) {
             case 'b':
                 setts->opt_number = 0;

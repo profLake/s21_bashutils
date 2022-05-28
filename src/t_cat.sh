@@ -3,7 +3,7 @@
 COUNTER_SUCCESS=0
 COUNTER_FAIL=0
 DIFF_RES=""
-TEST_FILE="./grep/s21_main.c"
+TEST_FILE="./sometext_with_spaces.txt"
 S21CAT="./cat/s21_cat"
 echo "" > log.txt
 

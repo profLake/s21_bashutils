@@ -20,7 +20,12 @@ int s21_data_print_file(s21_data *setts) {
             LOG("s21_data_print_file():fopen:\t\t%s", curr);
             curr_F = fopen(curr, "r");
         }
+        if (curr_F == NULL) {
+            result = 2;
+        }
 
+        LOG("s21_data_print_file():files_i_line_before_write:\t\t<%s>",
+            setts->files_i_line);
         while (result == 0 && fgets(setts->files_i_line, BUFF_SIZE, curr_F)) {
             result = s21_data_files_i_print_line(setts);
         }

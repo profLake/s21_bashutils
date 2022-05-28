@@ -5,10 +5,11 @@
 
 #define OPTIONS "bvEensTt"
 #define STDIN_STR ">"
-#define TAB_STR "^I"
+//#define TAB_STR "^I"
 #define END_SIGN_STR "$"
 #define N_WIDTH 6
 #define BUFF_SIZE 500
+
 
 typedef struct {
     char *options;

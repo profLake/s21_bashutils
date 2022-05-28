@@ -4,7 +4,6 @@
 int s21_data_files_i_print_line(s21_data *setts) {
     int result;
     int istoprint;
-    int c_istoprint;
     const char *p;
 
     result = s21_data_set_files_i_line(setts);
@@ -23,27 +22,23 @@ int s21_data_files_i_print_line(s21_data *setts) {
         }
 
         while (*p) {
-            c_istoprint = 1;
-
-            if (setts->opt_show_nonprinting == 0) {
-                if (isprint(*p) == 0) {
-                    c_istoprint = 1;
-                    /*  **** You should to set 0 here */
+            if (setts->opt_show_nonprinting) {
+                if (*p == 0) {
+                    printf("^@");
+                }
+                if (*p < 32 && *p != '\n' && *p != '\t') {
+                    printf("^%c", 'A' + *p);
+                }
+                if (*p == 127) {
+                    printf("^?");
                 }
             }
-
-            if (c_istoprint) {
-                if (setts->opt_show_tabs) {
-                    if (*p == '\t') {
-                        printf(TAB_STR);
-                        c_istoprint = 0;
-                    }
+            if (setts->opt_show_ends) {
+                if (*p == '\n') {
+                    printf(END_SIGN_STR);
                 }
-                if (setts->opt_show_ends) {
-                    if (*p == '\n') {
-                        printf(END_SIGN_STR);
-                    }
-                }
+            }
+            if (*p >= 32 && *p != 127) {
                 printf("%c", *p);
             }
             p++;

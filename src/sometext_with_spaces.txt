@@ -1,17 +1,17 @@
 EXAMPLES
-       cat f - g
-              Output f's contents, then standard input, then g's contents.
-
-       cat    Copy standard input to standard output.
-
-
-
+	cat f - g
+		Output f's contents, then standard input, then g's contents.
+	
+	cat    Copy standard input to standard output.
+	
+	
+	
 AUTHOR
-       Written by Torbjorn Granlund and Richard M. Stallman.
+	Written by Torbjorn Granlund and Richard M. Stallman.
 
 
 
 REPORTING BUGS
-       GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
-       Report any translation bugs to <https://translationproject.org/team/>
+	GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+	Report any translation bugs to <https://translationproject.org/team/>
 

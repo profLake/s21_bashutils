@@ -21,7 +21,7 @@ int s21_data_print_file(s21_data *setts) {
             curr_F = fopen(curr, "r");
         }
 
-        while (result == 0 && fgets(setts->files_i_line, 500, curr_F)) {
+        while (result == 0 && fgets(setts->files_i_line, BUFF_SIZE, curr_F)) {
             result = s21_data_files_i_print_line(setts);
         }
 

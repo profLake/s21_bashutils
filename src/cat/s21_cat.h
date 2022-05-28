@@ -8,6 +8,7 @@
 #define TAB_STR "^I"
 #define END_SIGN_STR "$"
 #define N_WIDTH 6
+#define BUFF_SIZE 500
 
 typedef struct {
     char *options;
@@ -24,10 +25,10 @@ typedef struct {
     int opt_show_tabs;          /* -T */
                                 /* -t. The same as -Tv */
 
-    char *files[500];
+    char *files[BUFF_SIZE];
     int files_count;
     int files_i;
-    char files_i_line[500];
+    char files_i_line[BUFF_SIZE];
     int files_i_line_count;
     int files_i_linenonemp_count;
     int files_i_line_wasblank;

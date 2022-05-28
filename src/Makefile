@@ -180,9 +180,9 @@ s21_grep_test: clean s21_grep
 
 s21_cat_test: clean $(CAT_EXE)
 	########################################################RIGHT:
-	       cat -n -b ./sometext.txt > cat.out
+	       cat -n -b $(CAT_EXE) > cat.out
 	#########################################################MINE:
-	$(CAT_EXE) -n -b ./sometext.txt > s21_cat.out
+	$(CAT_EXE) -n -b $(CAT_EXE) > s21_cat.out
 
 
 clean:

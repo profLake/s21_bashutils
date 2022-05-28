@@ -48,7 +48,7 @@ int s21_data_set_opts(s21_data *setts) {
         }
     }
 
-   
+
     if (result == 0) {
         int i;
 

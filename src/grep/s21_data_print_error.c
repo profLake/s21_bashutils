@@ -5,6 +5,7 @@ int s21_data_print_error(s21_data *setts, int error) {
 
     if (setts->opt_no_messages == 0) {
         if (error == 1) {
+            fprintf(stderr, "grep: some error");
         }
         if (error == 2) {
             fprintf(stderr, "grep: %s: No such file or directory\n",

@@ -43,9 +43,7 @@ int s21_data_print_output(s21_data *setts) {
         }
     } else {
         if (setts->opt_count) {
-            //if (setts->line_is_match_count > 0) {
-                printf("%d\n", setts->line_is_match_count);
-            //}
+            printf("%d\n", setts->line_is_match_count);
         }
     }
 

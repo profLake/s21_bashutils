@@ -21,17 +21,17 @@ int s21_data_files_i_print_line(s21_data *setts) {
         if (setts->opt_number) {
             printf("%*d\t", N_WIDTH, setts->files_i_line_output_i);
         }
-    
+
         while (*p) {
             c_istoprint = 1;
-    
+
             if (setts->opt_show_nonprinting == 0) {
                 if (isprint(*p) == 0) {
                     c_istoprint = 1;
                     /*  **** You should to set 0 here */
                 }
             }
-    
+
             if (c_istoprint) {
                 if (setts->opt_show_tabs) {
                     if (*p == '\t') {

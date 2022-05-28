@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     if (setts.opt_file) {
         result = s21_data_set_file_patterns(&setts);
     }
-    
+
     if (result == 0) {
         for (int i = 0; i < setts.files_count; i++) {
             FILE *curr_F;
@@ -30,26 +30,26 @@ int main(int argc, char *argv[]) {
                     LOG("main():ERROR:file_not_found:\t\t%s", setts.file_not_found);
                 }
             }
-            
+
             if (curr_F) {
                 setts.files_i = i;
                 setts.files_i_is_printed = 0;
                 setts.line_number = 0;
-        
+
                 while (result == 0 && fgets(setts.line, BUFF_SIZE, curr_F)) {
                     setts.line_number++;
-        
+
                     s21_str_del_newline(setts.line);
                     LOG("main():while:current line:\t\t\t<%s>", setts.line);
                     result = s21_data_line_is_match(&setts);
-            
+
                     if (result == 0)
                         s21_data_print_output(&setts);
-            
+
                     memset(setts.line, 0, BUFF_SIZE);
                 }
             }
-    
+
             if (curr_F && curr_F != stdin) {
                 LOG("main():fclose():\t\t%s", setts.files[i]);
                 fclose(curr_F);

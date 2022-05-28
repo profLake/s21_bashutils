@@ -24,7 +24,7 @@ int s21_data_set_files_i_line(s21_data *setts) {
         && len_nl == 0) {
         setts->files_i_line_i_istoprint = 0;
     }
-    
+
     if (len_nl == 0) {
         setts->files_i_line_wasblank = 1;
         LOG("s21_data_files_i_print_line():line_was_blank");

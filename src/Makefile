@@ -19,7 +19,7 @@ CAT_EXE=./cat/s21_cat
 ##CLIBS=-lm $(shell pkg-config --cflags --libs check)
 
 
-all: clean grep cpplint
+all: s21_grep s21_cat cpplint
 
 
 %.o: %.c ./grep/s21_grep.h
@@ -42,7 +42,7 @@ s21_grep: $(GREP_EXE)
 s21_cat: $(CAT_EXE)
 
 
-s21_grep_test: clean s21_grep
+s21_grep_test: s21_grep
 	########################################################RIGHT:
 	   grep     "reg....()" ./sometext.txt
 	#########################################################MINE:
@@ -193,48 +193,30 @@ clean:
 		-or -iname "*.info" \
 		-or -iname "*.css" \
 		-or -iname "*.png" \
-		-or -wholename $(GREP_EXE) \
 		-or -type d -name  ".DS_Store" \
-	\) -exec mv {} /tmp/ \;
+	\) -exec mv {} /tmp/ ; exit 0
 
-	####	Directories
+	mv $(GREP_EXE) /tmp/; exit 0
+	mv $(CAT_EXE) /tmp/; exit 0
 
 
 cpplint:
 	cp ../materials/linters/CPPLINT.cfg ./
 	python3 ../materials/linters/cpplint.py --extensions=c \
-        ./*.c \
-    	./*.h
+        $(GREP_SOURCES) $(CAT_SOURCES)
 
 
-valgrind: ./unit_tests.out
+valgrind: $(GREP_EXE) $(CAT_EXE)
 	valgrind \
 		-s \
 		--track-origins=yes \
 		--show-leak-kinds=all \
-		./unit_tests.out; exit 0;
-	#valgrind \
-    #   -s \
-	#	--leak-check=full \
-	#	--leak-resolution=med \
-	#	--log-file=RESULT_VALGRIND.txt \
-	#	./unit_tests.out
-	#valgrind \
-	#	--show-leak-kinds=all \
-	#	--track-origins=no \
-	#	--log-file=RESULT_VALGRIND.txt \
-	#	-s \
-	#	./unit_tests.out
-		#--leak-check=full --- "each individual leak will be shown in detail"
-		#--show-leak-kinds=all --- Show all of "definite, indirect, possible,
-		#   reachable" leak kinds in the "full" report.
-		#--track-origins=yes --- Favor useful output over speed. This tracks
-		#   the origins of uninitialized values, which could be very useful for
-		#   memory errors. Consider turning off if Valgrind is unacceptably
-		#   slow.
-		#--verbose: Can tell you about unusual behavior of your program. Repeat
-		#   for more verbosity.
-		#--log-file: Write to a file. Useful when output exceeds terminal space.
+		$(GREP_EXE); exit 0;
+	valgrind \
+		-s \
+		--track-origins=yes \
+		--show-leak-kinds=all \
+		$(CAT_EXE); exit 0;
 
 
 cppcheck:

@@ -13,6 +13,9 @@ int main(int argc, char *argv[]) {
     setts.files[0] = ">";
     setts.files_count = 1;
     result = s21_data_set_opts(&setts);
+    if (setts.opt_file) {
+        result = s21_data_set_file_patterns(&setts);
+    }
     
     if (result == 0) {
         for (int i = 0; i < setts.files_count; i++) {
@@ -22,25 +25,29 @@ int main(int argc, char *argv[]) {
             } else {
                 curr_F = fopen(setts.files[i], "r");
                 if (curr_F == NULL) {
-                    result = 2;
+                    setts.file_not_found = setts.files[i];
+                    s21_data_print_error(&setts, 2);
+                    LOG("main():ERROR:file_not_found:\t\t%s", setts.file_not_found);
                 }
             }
             
-            setts.files_i = i;
-            setts.files_i_is_printed = 0;
-            setts.line_number = 0;
-    
-            while (result == 0 && fgets(setts.line, 500, curr_F)) {
-                setts.line_number++;
-    
-                s21_str_del_newline(setts.line);
-                LOG("main():while:current line:\t\t\t%s", setts.line);
-                result = s21_data_line_is_match(&setts);
+            if (curr_F) {
+                setts.files_i = i;
+                setts.files_i_is_printed = 0;
+                setts.line_number = 0;
         
-                if (result == 0)
-                    s21_data_print_output(&setts);
+                while (result == 0 && fgets(setts.line, 500, curr_F)) {
+                    setts.line_number++;
         
-                memset(setts.line, 0, 500);
+                    s21_str_del_newline(setts.line);
+                    LOG("main():while:current line:\t\t\t<%s>", setts.line);
+                    result = s21_data_line_is_match(&setts);
+            
+                    if (result == 0)
+                        s21_data_print_output(&setts);
+            
+                    memset(setts.line, 0, 500);
+                }
             }
     
             if (curr_F && curr_F != stdin) {
@@ -59,6 +66,7 @@ int main(int argc, char *argv[]) {
     LOG1("THE_END", &setts);
 
     s21_data_print_error(&setts, result);
+    s21_data_free(&setts);
 
     return result;
 }

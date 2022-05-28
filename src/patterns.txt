@@ -1,2 +1,2 @@
-"uiu"
-"opt"
+main
+printf

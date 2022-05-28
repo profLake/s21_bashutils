@@ -32,10 +32,11 @@ int s21_data_line_is_match(s21_data *setts) {
     if (opt_ignore_case)
         eflags |= REG_ICASE;
 
-    LOG("s21_data_line_is_match():patterns_count:\t\t%d", patterns_count)
     for (int p = 0; p < patterns_count; p++) {
+        LOG("s21_data_line_is_match():startcycle:pattern:\t\t%s", patterns[p]);
         if (regcomp(&regex, patterns[p], eflags)) {
             result = -1;
+            LOG("s21_data_line_is_match():ERROR:regcomp_with:\t\t%s", patterns[p]);
         }
         if (result == 0) {
             offset = 0;

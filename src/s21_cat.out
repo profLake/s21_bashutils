@@ -1,4 +1,0 @@
-     1	regcomp() is use to compile
-     2	a regular expression into
-     3	a form that is suitable for
-     4	subsequent regexec() searches. regcomp();

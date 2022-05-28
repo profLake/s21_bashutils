@@ -36,7 +36,7 @@ typedef struct {
     int files_i;
     int files_i_is_printed;
 
-    //int last_result;
+    char *file_not_found;
 
     char line[500];
     int line_is_match;
@@ -50,10 +50,14 @@ void s21_data_set_defaults(s21_data *setts);
 int s21_data_set_opts(s21_data *setts);
 int s21_data_line_is_match(s21_data *setts);
 int s21_data_print_output(s21_data *setts);
+int s21_data_set_file_patterns(s21_data *setts);
+int s21_data_free(s21_data *setts);
 int s21_data_print_error(s21_data *setts, int error);
 #define s21_str_del_newline(str) \
-    str[strlen(str) - 1] = strchr(str, '\n') ? '\0' : str[strlen(str) - 1];
-
+    str[strlen(str) - 1] = strchr(str, '\n') \
+        ? '\0' : str[strlen(str) - 1];
+#define s21_str_alloc_same(str) \
+    calloc(strlen(str), sizeof(*str));
 
 /* Debug */
 #define STDERR stderr

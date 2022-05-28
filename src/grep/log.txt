@@ -1,0 +1,11 @@
+
+for s21_main.c s21_grep.h ../Makefile -v -c -l
+for s21_main.c -v -c -l
+-e for -e ^int s21_main.c s21_grep.h ../Makefile -v -c -l
+-e for -e ^int s21_main.c -v -c -l
+-e while -e void s21_main.c ../Makefile -v -c -l -f pattern.txt
+for s21_main.c s21_grep.h ../Makefile -v -c -n
+for s21_main.c -v -c -n
+-e for -e ^int s21_main.c s21_grep.h ../Makefile -v -c -n
+-e for -e ^int s21_main.c -v -c -n
+-e while -e void s21_main.c ../Makefile -v -c -n -f pattern.txt

@@ -1,0 +1,6 @@
+s21_main.c:        for (int i = 0; i < setts.files_count; i++) {
+s21_main.c:    for (int i = 0; i < setts->argc; i++) {
+../Makefile:	$(GREP_EXE) for s21_main.c ./grep/s21_main.c; exit 0
+../Makefile:	       grep for s21_main.c ./grep/s21_main.c; exit 0
+../Makefile:		#   the origins of uninitialized values, which could be very useful for
+../Makefile:		#   for more verbosity.

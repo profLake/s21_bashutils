@@ -5,6 +5,7 @@
 #include <regex.h>
 
 #define OPTIONS "e:ivclnhsf:o"
+#define BUFF_SIZE 50000
 
 typedef struct {
     char *options;
@@ -26,22 +27,22 @@ typedef struct {
 
     int opt_with_filename;          /* -H (optional). May be exluded by -l */
 
-    char *patterns[500];
+    char *patterns[BUFF_SIZE];
     int patterns_count;
     int patterns_i;
     char *patterns_file;
 
-    char *files[500];
+    char *files[BUFF_SIZE];
     int files_count;
     int files_i;
     int files_i_is_printed;
 
     char *file_not_found;
 
-    char line[500];
+    char line[BUFF_SIZE];
     int line_is_match;
     int line_is_match_count;
-    int line_inner_matches[500][2];
+    int line_inner_matches[BUFF_SIZE][2];
     int line_inner_matches_count;
     int line_number;
 } s21_data;

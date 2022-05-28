@@ -7,7 +7,7 @@ int s21_data_print_error(s21_data *setts, int error) {
         if (error == 1) {
         }
         if (error == 2) {
-            fprintf(stderr, "s21_grep: %s: No such file or directory\n",
+            fprintf(stderr, "grep: %s: No such file or directory\n",
                 setts->file_not_found);
         }
     }

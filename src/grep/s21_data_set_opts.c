@@ -63,7 +63,7 @@ int s21_data_set_opts(s21_data *setts) {
         i = setts->patterns_i;
         if (optind < argc) {
             if (setts->opt_e == 0 && setts->opt_file == 0) {
-                setts->patterns[i] = calloc(500, sizeof(char));
+                setts->patterns[i] = calloc(BUFF_SIZE, sizeof(char));
                 strcpy(setts->patterns[i], argv[optind]);
                 setts->patterns_i++;
                 setts->patterns_count++;

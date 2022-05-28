@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
                 setts.files_i_is_printed = 0;
                 setts.line_number = 0;
         
-                while (result == 0 && fgets(setts.line, 500, curr_F)) {
+                while (result == 0 && fgets(setts.line, BUFF_SIZE, curr_F)) {
                     setts.line_number++;
         
                     s21_str_del_newline(setts.line);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
                     if (result == 0)
                         s21_data_print_output(&setts);
             
-                    memset(setts.line, 0, 500);
+                    memset(setts.line, 0, BUFF_SIZE);
                 }
             }
     

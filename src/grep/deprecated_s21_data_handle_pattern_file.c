@@ -15,10 +15,10 @@ int s21_data_handle_pattern_file(s21_data *setts) {
     }
 
     i = setts->patterns_count;
-    setts->patterns[i] = calloc(500, 1);
-    while (result == 0 && fgets(setts->patterns[i], 500, file_F)) {
+    setts->patterns[i] = calloc(BUFF_SIZE, 1);
+    while (result == 0 && fgets(setts->patterns[i], BUFF_SIZE, file_F)) {
         i++;
-        setts->patterns[i] = calloc(500, 1);
+        setts->patterns[i] = calloc(BUFF_SIZE, 1);
     }
     setts->patterns_count = i;
 

@@ -19,15 +19,15 @@ int s21_data_set_file_patterns(s21_data *setts) {
         i = setts->patterns_i;
 
         if (setts->patterns[i] == NULL) {
-            setts->patterns[i] = calloc(500, sizeof(char));
+            setts->patterns[i] = calloc(BUFF_SIZE, sizeof(char));
         }
-        while (fgets(setts->patterns[i], 500, patts_F)) {
+        while (fgets(setts->patterns[i], BUFF_SIZE, patts_F)) {
             s21_str_del_newline(setts->patterns[i]);
             LOG("s21_data_set_file_patterns():file_pattern_written:\t\t%i,%s",
                 i, setts->patterns[i]);
             i++;
             setts->patterns_count++;
-            setts->patterns[i] = calloc(500, sizeof(char));
+            setts->patterns[i] = calloc(BUFF_SIZE, sizeof(char));
         }
 
         setts->patterns_i = i;

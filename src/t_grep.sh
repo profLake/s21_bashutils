@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd grep
+cd ./grep/
 
 COUNTER_SUCCESS=0
 COUNTER_FAIL=0
@@ -16,9 +16,9 @@ do
       do
         if [ $var != $var2 ] && [ $var2 != $var3 ] && [ $var != $var3 ]
         then
-          TEST1="for s21_main.c s21_grep.h ../Makefile $var $var2 $var3"
+          TEST1="$var $var2 $var3 for s21_main.c s21_grep.h ../Makefile "
           echo "$TEST1"
-          ./s21_grep $TEST1 > s21_grep.txt
+          $GREP_EXE $TEST1 > s21_grep.txt
           grep $TEST1 > grep.txt
           DIFF_RES="$(diff -s s21_grep.txt grep.txt)"
           if [ "$DIFF_RES" == "Files s21_grep.txt and grep.txt are identical" ]
@@ -30,9 +30,9 @@ do
           fi
           rm s21_grep.txt grep.txt
 
-          TEST2="for s21_main.c $var $var2 $var3"
+          TEST2="$var $var2 $var3 for s21_main.c "
           echo "$TEST2"
-          ./s21_grep $TEST2 > s21_grep.txt
+          $GREP_EXE $TEST2 > s21_grep.txt
           grep $TEST2 > grep.txt
           DIFF_RES="$(diff -s s21_grep.txt grep.txt)"
           if [ "$DIFF_RES" == "Files s21_grep.txt and grep.txt are identical" ]
@@ -44,9 +44,9 @@ do
           fi
           rm s21_grep.txt grep.txt
 
-          TEST3="-e for -e ^int s21_main.c s21_grep.h ../Makefile $var $var2 $var3"
+          TEST3="$var $var2 $var3 -e for -e ^int s21_main.c s21_grep.h ../Makefile "
           echo "$TEST3"
-          ./s21_grep $TEST3 > s21_grep.txt
+          $GREP_EXE $TEST3 > s21_grep.txt
           grep $TEST3 > grep.txt
           DIFF_RES="$(diff -s s21_grep.txt grep.txt)"
           if [ "$DIFF_RES" == "Files s21_grep.txt and grep.txt are identical" ]
@@ -58,9 +58,9 @@ do
           fi
           rm s21_grep.txt grep.txt
 
-          TEST4="-e for -e ^int s21_main.c $var $var2 $var3"
+          TEST4="$var $var2 $var3 -e for -e ^int s21_main.c "
           echo "$TEST4"
-          ./s21_grep $TEST4 > s21_grep.txt
+          $GREP_EXE $TEST4 > s21_grep.txt
           grep $TEST4 > grep.txt
           DIFF_RES="$(diff -s s21_grep.txt grep.txt)"
           if [ "$DIFF_RES" == "Files s21_grep.txt and grep.txt are identical" ]
@@ -72,9 +72,9 @@ do
           fi
           rm s21_grep.txt grep.txt
 
-          TEST5="-e regex -e ^print s21_main.c $var $var2 $var3 -f pattern.txt"
+          TEST5="$var $var2 $var3 -f patterns.txt -e regex -e ^print s21_main.c "
           echo "$TEST5"
-          ./s21_grep $TEST5 > s21_grep.txt
+          $GREP_EXE $TEST5 > s21_grep.txt
           grep $TEST5 > grep.txt
           DIFF_RES="$(diff -s s21_grep.txt grep.txt)"
           if [ "$DIFF_RES" == "Files s21_grep.txt and grep.txt are identical" ]
@@ -86,9 +86,9 @@ do
           fi
           rm s21_grep.txt grep.txt
 
-          TEST6="-e while -e void s21_main.c ../Makefile $var $var2 $var3 -f pattern.txt"
+          TEST6="$var $var2 $var3 -f patterns.txt -e while -e void s21_main.c ../Makefile "
           echo "$TEST6"
-          ./s21_grep $TEST6 > s21_grep.txt
+          $GREP_EXE $TEST6 > s21_grep.txt
           grep $TEST6 > grep.txt
           DIFF_RES="$(diff -s s21_grep.txt grep.txt)"
           if [ "$DIFF_RES" == "Files s21_grep.txt and grep.txt are identical" ]

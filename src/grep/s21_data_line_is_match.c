@@ -23,7 +23,7 @@ int s21_data_line_is_match(s21_data *setts) {
     regmatch_t regex_matches[1];
 
     *line_is_match_p = 0;
-    memset(line_inner_matches_pp, 0, 500*2);
+    memset(line_inner_matches_pp, 0, BUFF_SIZE*2);
     *line_inner_matches_count_p = 0;
     result = 0;
     i = 0;

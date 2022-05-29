@@ -19,6 +19,7 @@ CPPLINT=../../materials/linters/cpplint.py
 TEST_FILE_1=../common/sometext.txt
 TEXT_FILE_2=../common/sometext_with_spaces.txt
 TEXT_FILE_3=../common/sometext1.txt
+PATTERNS_TXT=../common/patterns.txt
 
 ##TEST_SOURCES=./test.c
 ##CLIBS=-lm $(shell pkg-config --cflags --libs check)

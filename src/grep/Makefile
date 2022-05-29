@@ -19,6 +19,7 @@ CPPLINT=../../materials/linters/cpplint.py
 TEST_FILE_1=../common/sometext.txt
 TEXT_FILE_2=../common/sometext_with_spaces.txt
 TEXT_FILE_3=../common/sometext1.txt
+PATTERNS_TXT=../common/patterns.txt
 
 ##TEST_SOURCES=./test.c
 ##CLIBS=-lm $(shell pkg-config --cflags --libs check)
@@ -121,9 +122,9 @@ s21_grep_test: s21_grep
 	######################################################################
 	######################################################################
 	########################################################RIGHT:
-	   grep     -f patterns.txt ./grep/s21_main.c $(TEXT_FILE_3); exit 0
+	   grep     -f $(PATTERNS_TXT) ./grep/s21_main.c $(TEXT_FILE_3); exit 0
 	#########################################################MINE:
-	$(GREP_EXE) -f patterns.txt ./grep/s21_main.c $(TEXT_FILE_3); exit 0
+	$(GREP_EXE) -f $(PATTERNS_TXT) ./grep/s21_main.c $(TEXT_FILE_3); exit 0
 	######################################################################
 	######################################################################
 	######################################################################

@@ -221,7 +221,7 @@ s21_cat_test: clean $(CAT_EXE)
 
 
 clean:
-	find . \( -iname "*.gcda" \
+	find ./ \( -iname "*.gcda" \
 		-or -iname "*.gcov" \
 		-or -iname "*.gcno" \
 		-or -iname "*.out" \
@@ -231,7 +231,9 @@ clean:
 		-or -iname "*.info" \
 		-or -iname "*.css" \
 		-or -iname "*.png" \
-	\) -exec mv {} /tmp/ ; exit 0
+		-or -iname "*.out" \
+		-or -iname "*log.txt" \
+	\) -exec mv {} /tmp/ \; ; exit 0
 
 	mv $(GREP_EXE) /tmp/; exit 0
 	mv $(CAT_EXE) /tmp/; exit 0

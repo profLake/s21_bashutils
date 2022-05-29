@@ -8,12 +8,14 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -D DEBUG_
 LDFLAGS=
-GREP_SOURCES=$(wildcard ./grep/s21_*.c)
+GREP_SOURCES=$(wildcard ./s21_*.c)
 GREP_OBJECTS=$(GREP_SOURCES:.c=.o)
-GREP_EXE=./grep/s21_grep
-CAT_SOURCES=$(wildcard ./cat/s21_*.c)
+GREP_EXE=./s21_grep
+CAT_SOURCES=$(wildcard ./s21_*.c)
 CAT_OBJECTS=$(CAT_SOURCES:.c=.o)
-CAT_EXE=./cat/s21_cat
+CAT_EXE=./s21_cat
+CPPLINT_CFG=../../materials/linters/CPPLINT.cfg
+CPPLINT=../../materials/linters/cpplint.py
 
 ##TEST_SOURCES=./test.c
 ##CLIBS=-lm $(shell pkg-config --cflags --libs check)
@@ -240,8 +242,8 @@ clean:
 
 
 cpplint:
-	cp ../materials/linters/CPPLINT.cfg ./
-	python3 ../materials/linters/cpplint.py --extensions=c \
+	cp $(CPPLINT_CFG) ./
+	python3 $(CPPLINT) --extensions=c \
         $(GREP_SOURCES) $(CAT_SOURCES)
 
 

@@ -6,7 +6,7 @@
 #
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -D DEBUG_
+CFLAGS=-Wall -Wextra -Werror -g -D DEBUG
 LDFLAGS=
 GREP_SOURCES=$(wildcard ./s21_*.c)
 GREP_OBJECTS=$(GREP_SOURCES:.c=.o)
@@ -263,10 +263,13 @@ cpplint:
 valgrind: $(GREP_EXE)
 	valgrind \
 		-s \
+		--dsymutil=yes \
 		--track-origins=yes \
 		--show-leak-kinds=all \
 		--log-file=./valgrind_result.txt \
-		make s21_grep_test; exit 0;
+		--leak-check=full \
+		./s21_grep -e reg -e i -e o -f ../common/patterns.txt \
+			../common/sometext.txt ../common/sometext_with_spaces.txt; exit 0;
 
 
 cppcheck:

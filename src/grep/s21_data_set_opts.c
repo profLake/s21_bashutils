@@ -16,9 +16,12 @@ int s21_data_set_opts(s21_data *setts) {
         switch (opt) {
             case 'e':
                 setts->opt_e = 1;
-                setts->patterns[setts->patterns_i]
-                    = s21_str_alloc_same(optarg);
-                strcpy(setts->patterns[setts->patterns_i], optarg);
+                setts->patterns[setts->patterns_i] = calloc(BUFF_SIZE, 1);
+                if (setts->patterns[setts->patterns_i]) {
+                    LOG("s21_data_set_opts():patterns_allocate:\t\t%d<%p>",
+                        setts->patterns_i, setts->patterns[setts->patterns_i]);
+                    strcpy(setts->patterns[setts->patterns_i], optarg);
+                }
                 setts->patterns_i++;
                 setts->patterns_count++;
                 break;
@@ -65,6 +68,8 @@ int s21_data_set_opts(s21_data *setts) {
             if (setts->opt_e == 0 && setts->opt_file == 0) {
                 setts->patterns[i] = calloc(BUFF_SIZE, sizeof(char));
                 strcpy(setts->patterns[i], argv[optind]);
+                LOG("s21_data_set_opts():patterns_allocate:\t\t%d<%p>",
+                    setts->patterns_i, setts->patterns[setts->patterns_i]);
                 setts->patterns_i++;
                 setts->patterns_count++;
                 LOG("s21_data_set_opts():afterpattern_writed:\t\t%i<%s>", i, argv[optind]);

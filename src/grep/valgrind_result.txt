@@ -1,0 +1,14 @@
+==74329== Memcheck, a memory error detector
+==74329== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==74329== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==74329== Command: ./s21_grep -e reg -e i -e o -f ../common/patterns.txt ../common/sometext.txt ../common/sometext_with_spaces.txt
+==74329== Parent PID: 74328
+==74329== 
+==74329== 
+==74329== HEAP SUMMARY:
+==74329==     in use at exit: 0 bytes in 0 blocks
+==74329==   total heap usage: 2,490 allocs, 2,490 frees, 696,524 bytes allocated
+==74329== 
+==74329== All heap blocks were freed -- no leaks are possible
+==74329== 
+==74329== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

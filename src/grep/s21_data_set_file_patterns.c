@@ -20,6 +20,8 @@ int s21_data_set_file_patterns(s21_data *setts) {
 
         if (setts->patterns[i] == NULL) {
             setts->patterns[i] = calloc(BUFF_SIZE, sizeof(char));
+            LOG("s21_data_set_file_patterns():pattern_alloc:\t\t%d<%p>",
+                    i, setts->patterns[i]);
         }
         while (fgets(setts->patterns[i], BUFF_SIZE, patts_F)) {
             s21_str_del_newline(setts->patterns[i]);

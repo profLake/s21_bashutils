@@ -33,7 +33,8 @@ int s21_data_line_is_match(s21_data *setts) {
         eflags |= REG_ICASE;
 
     for (int p = 0; p < patterns_count; p++) {
-        LOG("s21_data_line_is_match():startcycle:pattern:\t\t%s", patterns[p]);
+        LOG("s21_data_line_is_match():startcycle:pattern_reg_alloc:\t\t%s",
+                patterns[p]);
         if (regcomp(&regex, patterns[p], eflags)) {
             result = -1;
             LOG("s21_data_line_is_match():ERROR:regcomp_with:\t\t%s", patterns[p]);
@@ -48,18 +49,16 @@ int s21_data_line_is_match(s21_data *setts) {
                 *line_inner_matches_count_p += 1;
                 offset += regex_matches[0].rm_eo;
                 i++;
-                LOG("s21_data_line_is_match():found")
             }
         }
+        regfree(&regex);
+        LOG("s21_data_line_is_match():regfree:\t\t<%s>", patterns[p]);
         LOG("s21_data_line_is_match():endcycle")
     }
     if ((i > 0 && opt_invert_match == 0)
         || (i == 0 && opt_invert_match)) {
         *line_is_match_p = 1;
         *line_is_match_count_p += 1;
-        LOG("s21_data_line_is_match():issuit:i:\t\t%d", i)
-        LOG("s21_data_line_is_match():issuit:opt_invert_match:\t\t%d",
-            opt_invert_match)
     }
 
     return result;

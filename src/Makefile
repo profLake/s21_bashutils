@@ -246,17 +246,9 @@ cpplint:
         $(GREP_SOURCES) $(CAT_SOURCES)
 
 
-valgrind: $(GREP_EXE) $(CAT_EXE)
-	valgrind \
-		-s \
-		--track-origins=yes \
-		--show-leak-kinds=all \
-		$(GREP_EXE); exit 0;
-	valgrind \
-		-s \
-		--track-origins=yes \
-		--show-leak-kinds=all \
-		$(CAT_EXE); exit 0;
+valgrind: 
+	cd ./cat/; make valgrind; exit 0
+	cd ./grep/; make valgrind; exit 0
 
 
 cppcheck:

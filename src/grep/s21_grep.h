@@ -58,7 +58,7 @@ int s21_data_print_error(s21_data *setts, int error);
     str[strlen(str) - 1] = strchr(str, '\n') \
         ? '\0' : str[strlen(str) - 1];
 #define s21_str_alloc_same(str) \
-    calloc(strlen(str), sizeof(*str));
+    calloc(strlen(str) ? strlen(str) : 1, 1);
 
 /* Debug */
 #define STDERR stderr

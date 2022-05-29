@@ -5,11 +5,12 @@ int s21_data_free(s21_data *setts) {
     int result;
     int i;
 
+    LOG("s21_data_free():start");
     result = 0;
     i = 0;
 
-    while (i < setts->patterns_count + 1) {
-        LOG("s21_data_free():trying_to_free:\t\t%i<%s>", i, setts->patterns[i]);
+    while (setts->patterns[i]) {
+        LOG("s21_data_free():trying_to_free:\t\t%i<%p>", i, setts->patterns[i]);
         free(setts->patterns[i]);
         i++;
     }

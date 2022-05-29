@@ -35,6 +35,8 @@ typedef struct {
     int files_i_line_wasblank;
     int files_i_line_output_i;
     int files_i_line_i;
+    /*  files_i_line_i --- actually it can be cutted off. You keeped the field
+     *      in case of future upgrade */
     int files_i_line_i_nonblank;
     int files_i_line_i_istoprint;
 } s21_data;

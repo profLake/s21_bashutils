@@ -8,7 +8,8 @@ int s21_data_print_file(s21_data *setts) {
     FILE *curr_F;
 
     result = 0;
-    setts->files_i_line_output_i = 0;
+    //setts->files_i_line_output_i = 0;
+    /*  ... = 0 --- on NixOS you should not do it */
     setts->files_i_line_i = 0;
     i = setts->files_i;
     curr = setts->files[i];

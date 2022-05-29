@@ -33,10 +33,18 @@ int s21_data_files_i_print_line(s21_data *setts) {
                     printf("^?");
                 }
             }
-            if (setts->opt_show_ends) {
-                if (*p == '\n') {
-                    printf(END_SIGN_STR);
+            if (*p == '\t') {
+                if (setts->opt_show_tabs) {
+                    printf("^I");
+                } else {
+                    printf("\t");
                 }
+            }
+            if (*p == '\n') {
+                if (setts->opt_show_ends) {
+                    printf("$");
+                }
+                printf("\n");
             }
             if (*p >= 32 && *p != 127) {
                 printf("%c", *p);

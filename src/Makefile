@@ -176,7 +176,7 @@ s21_grep_test: s21_grep
 
 
 
-s21_cat_test: clean $(CAT_EXE)
+s21_cat_test: $(CAT_EXE)
 	########################################################RIGHT:
 	       cat -te ./sometext_with_spaces.txt
 	#########################################################MINE:
@@ -231,6 +231,7 @@ clean:
 		-or -iname "*.png" \
 		-or -iname "*.out" \
 		-or -iname "*log.txt" \
+		-or -iname "valgrind_result.txt" \
 	\) -exec mv {} /tmp/ \; ; exit 0
 
 	mv $(GREP_EXE) /tmp/; exit 0

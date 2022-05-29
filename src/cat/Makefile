@@ -250,17 +250,13 @@ cpplint:
         $(GREP_SOURCES) $(CAT_SOURCES)
 
 
-valgrind: $(GREP_EXE) $(CAT_EXE)
+valgrind: $(CAT_EXE)
 	valgrind \
 		-s \
 		--track-origins=yes \
 		--show-leak-kinds=all \
-		$(GREP_EXE); exit 0;
-	valgrind \
-		-s \
-		--track-origins=yes \
-		--show-leak-kinds=all \
-		$(CAT_EXE); exit 0;
+		--log-file=./valgrind_result.txt \
+		make s21_cat_test; exit 0;
 
 
 cppcheck:

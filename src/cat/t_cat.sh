@@ -26,7 +26,6 @@ done
 echo "TEST1 IS BEHIND"
 echo "SUCCESS: $COUNTER_SUCCESS"
 echo "FAIL: $COUNTER_FAIL"
-read
 
 
 
@@ -56,7 +55,6 @@ done
 echo "TEST2 IS BEHIND"
 echo "SUCCESS: $COUNTER_SUCCESS"
 echo "FAIL: $COUNTER_FAIL"
-read
 
 
 
@@ -90,7 +88,6 @@ done
 echo "TEST3 IS BEHIND"
 echo "SUCCESS: $COUNTER_SUCCESS"
 echo "FAIL: $COUNTER_FAIL"
-read
 
 
 

@@ -6,7 +6,7 @@
 #
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -g -D DEBUG
+CFLAGS=-Wall -Wextra -Werror -g -D DEBUG_
 LDFLAGS=
 GREP_SOURCES=$(wildcard ./s21_*.c)
 GREP_OBJECTS=$(GREP_SOURCES:.c=.o)

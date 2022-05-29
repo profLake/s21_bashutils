@@ -27,12 +27,10 @@ all: s21_grep s21_cat cpplint
 
 
 $(GREP_EXE): $(GREP_OBJECTS)
-	clear
 	$(CC) $^ -o $@
 
 
 $(CAT_EXE): $(CAT_OBJECTS)
-	clear
 	$(CC) $^ -o $@
 
 
